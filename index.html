@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Selamat Ulang Tahun</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #111;
+      overflow: hidden;
+    }
+
+    section {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      background: #fff;
+    }
+
+    section.active {
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      font-weight: 300;
+      max-width: 600px;
+      color: #555;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    button {
+      background: #111;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 28px;
+      text-align: center;
+      max-width: 340px;
+      position: relative;
+      z-index: 10;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      filter: brightness(0.97);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0;
+    }
+
+    /* Balloons */
+    .balloon {
+      width: 40px;
+      height: 50px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: -60px;
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      width: 2px;
+      height: 12px;
+      background: #aaa;
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <audio id="music" src="assets/I Love You So - The Walters cover (mp3cut.net).mp3" loop></audio>
+
+  <section id="slide1" class="active">
+    <h1>Hi, <span id="nama">Anggun</span> 👋</h1>
+    <p>Selamat merayakan hari spesialmu.</p>
+    <button onclick="nextSlide()">Mulai</button>
+  </section>
+
+  <section id="slide2">
+    <h1>Selamat Ulang Tahun 🎉</h1>
+    <p>Hari ini adalah perayaan tentang kamu — seseorang yang luar biasa, sederhana, dan tulus.</p>
+    <button onclick="nextSlide()">Lanjut</button>
+  </section>
+
+  <section id="slide3">
+    <h1>Tahun Baru, Kisah Baru</h1>
+    <p>Semoga langkah-langkahmu ke depan penuh cahaya, kedamaian, dan harapan yang segar.</p>
+    <button onclick="nextSlide()">Lanjut</button>
+  </section>
+
+  <section id="slide4">
+    <h1>Terima Kasih</h1>
+    <p>Untuk semua senyum, tawa, dan inspirasi yang telah kamu bagi selama ini.</p>
+    <button onclick="nextSlide()">Lanjut</button>
+  </section>
+
+  <section id="slide5">
+    <h1>Kamu Berharga</h1>
+    <p>Jangan pernah lupa bahwa dunia ini lebih indah karena kehadiranmu.</p>
+    <button onclick="nextSlide()">Lanjut</button>
+  </section>
+
+  <section id="slide6">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1603575448362-19f3fdc9b7dd?w=800" alt="Foto Kenangan">
+      <h2>Untukmu</h2>
+      <p>Semoga kebahagiaan dan kedamaian selalu bersamamu. Hari ini, dan setiap hari. 💫</p>
+    </div>
+  </section>
+
+  <script>
+    const slides = document.querySelectorAll("section");
+    let index = 0;
+
+    function nextSlide() {
+      slides[index].classList.remove("active");
+      index++;
+
+      if (index < slides.length) {
+        slides[index].classList.add("active");
+
+        // play music on slide 2
+        if (index === 1) {
+          document.getElementById("music").play();
+        }
+
+        // trigger balloons on last slide
+        if (index === slides.length - 1) {
+          startBalloons();
+        }
+      }
+    }
+
+    function startBalloons() {
+      const colors = ["#ff6b6b","#ffd166","#4d96ff","#06d6a0","#ff8fab","#a29bfe"];
+      setInterval(() => {
+        const balloon = document.createElement("div");
+        balloon.classList.add("balloon");
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDuration = 4 + Math.random() * 3 + "s";
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 7000);
+      }, 600);
+    }
+  </script>
+</body>
+</html>
+```
